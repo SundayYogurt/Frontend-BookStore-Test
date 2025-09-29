@@ -82,7 +82,7 @@ const EditBook = () => {
     <div className="flex min-h-screen items-center justify-center px-6 py-12">
       <div className="w-screen max-w-lg space-y-8 rounded-2xl bg-gray-200 p-8 shadow-md">
         <h2 className="text-center text-3xl font-bold text-gray-800 mb-6">
-          แก้ไขกิจกรรม
+          แก้ไขหนังสือ
         </h2>
 
         <form
@@ -92,17 +92,17 @@ const EditBook = () => {
           {/* Name */}
           <div>
             <label htmlFor="name" className="block font-medium text-gray-700">
-              ชื่อกิจกรรม
+              ชื่อหนังสือ
             </label>
             <input
               type="text"
               id="name"
               name="name"
-              value={book.name}
+              value={book?.title}
               onChange={handleChange}
               required
               className="mt-1 w-full rounded border border-gray-300 px-3 py-2"
-              placeholder="ชื่อกิจกรรม"
+              placeholder="ชื่อหนังสือ"
             />
           </div>
 
@@ -117,7 +117,7 @@ const EditBook = () => {
             <textarea
               id="description"
               name="description"
-              value={book.description}
+              value={book?.description}
               onChange={handleChange}
               required
               rows={3}
