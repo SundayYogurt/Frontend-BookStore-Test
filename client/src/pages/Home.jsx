@@ -40,7 +40,7 @@ const Books = () => {
           icon: "error",
           title: "เกิดข้อผิดพลาดในการเชื่อมต่อ",
           text:
-            error.response?.message ||
+            error.response?.data?.message ||
             error.message ||
             "ไม่สามารถเชื่อมต่อกับเซิร์ฟเวอร์ได้",
           confirmButtonText: "ตกลง",
@@ -84,8 +84,8 @@ const Books = () => {
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
           ref={targetRef}
         >
-          {books?.length > 0 ? (
-            books?.map((book) => (
+          {books?.data?.length > 0 ? (
+            books?.data?.map((book) => (
               <BookCard key={book.itemId} book={book} />
             ))
           ) : (
@@ -101,8 +101,8 @@ const Books = () => {
       </h2>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {comics?.length > 0 ? (
-          comics?.map((comic) => (
+        {comics?.data?.length > 0 ? (
+          comics?.data?.map((comic) => (
             <ComicCard key={comic.itemId} comic={comic} />
           ))
         ) : (
@@ -118,8 +118,8 @@ const Books = () => {
         </h2>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {journals?.length > 0 ? (
-          journals?.map((journal) => (
+        {journals?.data?.length > 0 ? (
+          journals?.data?.map((journal) => (
             <JournalCard key={journal.itemId} journal={journal} />
           ))
         ) : (

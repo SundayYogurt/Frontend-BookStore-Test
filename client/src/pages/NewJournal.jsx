@@ -4,7 +4,7 @@ import { useNavigate } from "react-router";
 import JournalsService from "../services/JournalsService";
 
 
-const NewComic = () => {
+const NewJournal = () => {
   const navigate = useNavigate();
   const [journalData, setJournalData] = useState({
     title: "",
@@ -301,4 +301,4 @@ const NewComic = () => {
   );
 };
 
-export default NewComic;
+export default NewJournal;
