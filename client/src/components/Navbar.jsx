@@ -5,8 +5,9 @@ import { Link } from "react-router";
 const Navbar = () => {
   const menuItems = [
     { name: "New Book", url: "/add-book" },
+    { name:  "New Comic", url: "/add-comic"},
+    { name:  "New Journal", url: "/add-journal"},
     { name: "Home", url: "/" },
-    { name: "Activities", url: "/activities" },
   ];
 
   return (
@@ -40,12 +41,13 @@ const Navbar = () => {
             ))}
           </ul>
         </div>
+        <img className="h-[50px]" src="https://png.pngtree.com/png-clipart/20230122/original/pngtree-book-icon-vector-image-png-image_8926794.png" />
         <Link to="/" className="btn btn-ghost text-xl">
           Book Store
         </Link>
       </div>
 
-      <div className="navbar-center hidden lg:flex">
+      <div className="navbar-end hidden lg:flex">
         <ul className="menu menu-horizontal px-1">
           {menuItems.map((item, idx) => (
             <li key={idx}>
@@ -54,18 +56,7 @@ const Navbar = () => {
           ))}
         </ul>
       </div>
-
-      <div className="navbar-end space-x-2.5">
-        <div className="flex gap-5">
-          <Link to="/register">
-            <button className="btn btn-soft btn-primary">Register</button>
-          </Link>
-          <Link to="/login">
-            <button className="btn btn-soft btn-accent">Login</button>
-          </Link>
-        </div>
       </div>
-    </div>
   );
 };
 

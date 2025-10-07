@@ -1,21 +1,21 @@
 // ActivityCard.jsx
 import React, { useState } from "react";
 import { Link } from "react-router"; // Corrected import
-import BooksService from "../services/BooksService";
+import ComicsService from "../services/ComicsService";
 import Swal from "sweetalert2";
 
-const BookCard = ({ book }) => {
+const ComicCard = ({ comic }) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   const handleDelete = async (id) => {
     try {
-      const response = await BooksService.deleteBook(id);
+      const response = await ComicsService.deleteComic(id)
 
       if (response?.status === 200) {
         Swal.fire({
           icon: "success",
-          title: `Deleted ${book?.title}`,
-          text: "This book has been deleted",
+          title: `Deleted ${comic?.title}`,
+          text: "This comic has been deleted",
           confirmButtonText: "OK",
         }).then(() => {
           window.location.reload();
@@ -35,7 +35,7 @@ const BookCard = ({ book }) => {
     }
   };
 
-  const description = book?.description || "";
+  const description = comic?.description || "";
   const truncatedDescription =
     description.length > 100
       ? description.substring(0, 100) + "..."
@@ -59,22 +59,22 @@ const BookCard = ({ book }) => {
     <div className="bg-white shadow-lg rounded-xl overflow-hidden transition delay-10 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 hover:bg-gray-200 hover:shadow-2xl flex flex-col">
       <img
         className="w-full h-56 object-cover"
-        src={book?.coverImage || "https://via.placeholder.com/400x200"}
-        alt={`Cover for ${book?.title}`}
+        src={comic?.coverImage || "https://via.placeholder.com/400x200"}
+        alt={`Cover for ${comic?.title}`}
       />
 
       <div className="p-6 flex-grow">
-        <h2 className="text-2xl font-bold text-gray-800 mb-2">{book?.title}</h2>
+        <h2 className="text-2xl font-bold text-gray-800 mb-2">{comic?.title}</h2>
 
         <div className="flex items-center mb-4">
           <span
-            className={`px-3 py-1 text-sm font-semibold rounded-full ${getStatusClass(
-              book?.status
+            className={`px-3 py-1 text-sm font-semibold rounded-full  ${getStatusClass(
+              comic?.status
             )}`}
           >
-            {book?.status}
+            {comic?.status}
           </span>
-          <span className="text-gray-600 text-sm ml-3">By {book?.author}</span>
+          <span className="text-gray-600 text-sm ml-3">By {comic?.author}</span>
         </div>
 
         <p className="text-gray-700 mb-4">
@@ -84,40 +84,44 @@ const BookCard = ({ book }) => {
         {isExpanded && (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-3 text-sm text-gray-600 mb-4">
             <p>
-              <strong className="font-medium text-gray-800">Publisher:</strong>{" "}
-              {book?.publisher}
+              <strong className="font-medium text-gray-800">Category:</strong>{" "}
+              {comic?.category}
             </p>
             <p>
               <strong className="font-medium text-gray-800">Year:</strong>{" "}
-              {book?.publishYear}
+              {comic?.publishYear}
             </p>
             <p>
               <strong className="font-medium text-gray-800">ISBN:</strong>{" "}
-              {book?.isbn}
+              {comic?.isbn}
             </p>
             <p>
-              <strong className="font-medium text-gray-800">Genre:</strong>{" "}
-              {book?.genre}
+              <strong className="font-medium text-gray-800">Series:</strong>{" "}
+              {comic?.series}
             </p>
             <p>
-              <strong className="font-medium text-gray-800">Pages:</strong>{" "}
-              {book?.pageCount}
+              <strong className="font-medium text-gray-800">Volume:</strong>{" "}
+              {comic?.volumeNumber}
             </p>
             <p>
-              <strong className="font-medium text-gray-800">Language:</strong>{" "}
-              {book?.language}
+              <strong className="font-medium text-gray-800">Illustrator:</strong>{" "}
+              {comic?.illustrator}
             </p>
             <p>
-              <strong className="font-medium text-gray-800">Edition:</strong>{" "}
-              {book?.edition}
+              <strong className="font-medium text-gray-800">Color:</strong>{" "}
+              {comic?.colorType}
+            </p>
+            <p>
+              <strong className="font-medium text-gray-800">Target Age:</strong>{" "}
+              {comic?.targetAge}
             </p>
             <p>
               <strong className="font-medium text-gray-800">Location:</strong>{" "}
-              {book?.location}
+              {comic?.location}
             </p>
             <p className="col-span-2">
               <strong className="font-medium text-gray-800">Added on:</strong>{" "}
-              {new Date(book?.addedDate).toLocaleDateString()}
+              {new Date(comic?.addedDate).toLocaleDateString()}
             </p>
           </div>
         )}
@@ -133,13 +137,13 @@ const BookCard = ({ book }) => {
           </button>
           <div className="flex-grow"></div>
           <Link
-            to={`/edit-book/${book?.itemId}`}
+            to={`/edit-comic/${comic?.itemId}`}
             className="btn btn-sm btn-warning text-white"
           >
             Edit
           </Link>
           <button
-            onClick={() => handleDelete(book?.itemId)}
+            onClick={() => handleDelete(comic?.itemId)}
             className="btn btn-sm btn-error text-white"
           >
             Delete
@@ -150,4 +154,4 @@ const BookCard = ({ book }) => {
   );
 };
 
-export default BookCard;
+export default ComicCard;
