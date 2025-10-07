@@ -3,8 +3,6 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router";
 import Swal from "sweetalert2";
 import BooksService from "../services/BooksService";
-import ComicsService from "../services/ComicsService";
-import JournalsService from "../services/JournalsService";
 
 const EditBook = () => {
   const navigate = useNavigate();
@@ -28,15 +26,6 @@ const EditBook = () => {
     pageCount: "",
     language: "",
     genre: "",
-    series: "",
-    volumeNumber: "",
-    illustrator: "",
-    colorType: "",
-    targetAge: "",
-    issn: "",
-    volume: "",
-    issue: "",
-    publicationFrequency: "",
   });
 
   // ดึงข้อมูล book ตาม id
@@ -67,15 +56,7 @@ const EditBook = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      let response;
-      if (book.itemType === 'Comic') {
-        response = await ComicsService.updateComic(id, book);
-      } else if (book.itemType === 'Journal') {
-        response = await JournalsService.updateJournal(id, book);
-      } else {
-        response = await BooksService.updateBook(id, book);
-      }
-
+      const response = await BooksService.updateBook(id, book);
       if (response.status === 200) {
         Swal.fire({
           title: "สำเร็จ",
@@ -180,6 +161,25 @@ const EditBook = () => {
             />
           </div>
 
+          {/* Publisher */}
+          <div>
+            <label
+              htmlFor="publisher"
+              className="block font-medium text-gray-700"
+            >
+              สำนักพิมพ์
+            </label>
+            <input
+              type="text"
+              id="publisher"
+              name="publisher"
+              value={book?.publisher}
+              onChange={handleChange}
+              className="mt-1 w-full rounded border border-gray-300 px-3 py-2"
+              placeholder="สำนักพิมพ์"
+            />
+          </div>
+
           {/* ISBN */}
           <div>
             <label htmlFor="isbn" className="block font-medium text-gray-700">
@@ -196,231 +196,40 @@ const EditBook = () => {
             />
           </div>
 
-          {book.itemType === 'Comic' ? (
-            <>
-              {/* Series */}
-              <div>
-                <label htmlFor="series" className="block font-medium text-gray-700">
-                  Series
-                </label>
-                <input
-                  type="text"
-                  id="series"
-                  name="series"
-                  value={book?.series}
-                  onChange={handleChange}
-                  className="mt-1 w-full rounded border border-gray-300 px-3 py-2"
-                  placeholder="Series"
-                />
-              </div>
+          {/* Page Count */}
+          <div>
+            <label
+              htmlFor="pageCount"
+              className="block font-medium text-gray-700"
+            >
+              จำนวนหน้า
+            </label>
+            <input
+              type="number"
+              id="pageCount"
+              name="pageCount"
+              value={book?.pageCount}
+              onChange={handleChange}
+              className="mt-1 w-full rounded border border-gray-300 px-3 py-2"
+              placeholder="จำนวนหน้า"
+            />
+          </div>
 
-              {/* Volume Number */}
-              <div>
-                <label htmlFor="volumeNumber" className="block font-medium text-gray-700">
-                  Volume
-                </label>
-                <input
-                  type="number"
-                  id="volumeNumber"
-                  name="volumeNumber"
-                  value={book?.volumeNumber}
-                  onChange={handleChange}
-                  className="mt-1 w-full rounded border border-gray-300 px-3 py-2"
-                  placeholder="Volume Number"
-                />
-              </div>
-
-              {/* Illustrator */}
-              <div>
-                <label htmlFor="illustrator" className="block font-medium text-gray-700">
-                  Illustrator
-                </label>
-                <input
-                  type="text"
-                  id="illustrator"
-                  name="illustrator"
-                  value={book?.illustrator}
-                  onChange={handleChange}
-                  className="mt-1 w-full rounded border border-gray-300 px-3 py-2"
-                  placeholder="Illustrator"
-                />
-              </div>
-
-              {/* Color Type */}
-              <div>
-                <label htmlFor="colorType" className="block font-medium text-gray-700">
-                  Color Type
-                </label>
-                <input
-                  type="text"
-                  id="colorType"
-                  name="colorType"
-                  value={book?.colorType}
-                  onChange={handleChange}
-                  className="mt-1 w-full rounded border border-gray-300 px-3 py-2"
-                  placeholder="Color Type"
-                />
-              </div>
-
-              {/* Target Age */}
-              <div>
-                <label htmlFor="targetAge" className="block font-medium text-gray-700">
-                  Target Age
-                </label>
-                <input
-                  type="text"
-                  id="targetAge"
-                  name="targetAge"
-                  value={book?.targetAge}
-                  onChange={handleChange}
-                  className="mt-1 w-full rounded border border-gray-300 px-3 py-2"
-                  placeholder="Target Age"
-                />
-              </div>
-            </>
-          ) : book.itemType === 'Journal' ? (
-            <>
-              {/* ISSN */}
-              <div>
-                <label htmlFor="issn" className="block font-medium text-gray-700">
-                  ISSN
-                </label>
-                <input
-                  type="text"
-                  id="issn"
-                  name="issn"
-                  value={book?.issn}
-                  onChange={handleChange}
-                  className="mt-1 w-full rounded border border-gray-300 px-3 py-2"
-                  placeholder="ISSN"
-                />
-              </div>
-
-              {/* Volume */}
-              <div>
-                <label htmlFor="volume" className="block font-medium text-gray-700">
-                  Volume
-                </label>
-                <input
-                  type="text"
-                  id="volume"
-                  name="volume"
-                  value={book?.volume}
-                  onChange={handleChange}
-                  className="mt-1 w-full rounded border border-gray-300 px-3 py-2"
-                  placeholder="Volume"
-                />
-              </div>
-
-              {/* Issue */}
-              <div>
-                <label htmlFor="issue" className="block font-medium text-gray-700">
-                  Issue
-                </label>
-                <input
-                  type="text"
-                  id="issue"
-                  name="issue"
-                  value={book?.issue}
-                  onChange={handleChange}
-                  className="mt-1 w-full rounded border border-gray-300 px-3 py-2"
-                  placeholder="Issue"
-                />
-              </div>
-
-              {/* Publication Frequency */}
-              <div>
-                <label htmlFor="publicationFrequency" className="block font-medium text-gray-700">
-                  Publication Frequency
-                </label>
-                <input
-                  type="text"
-                  id="publicationFrequency"
-                  name="publicationFrequency"
-                  value={book?.publicationFrequency}
-                  onChange={handleChange}
-                  className="mt-1 w.full rounded border border-gray-300 px-3 py-2"
-                  placeholder="Publication Frequency"
-                />
-              </div>
-
-              {/* Publisher */}
-              <div>
-                <label
-                  htmlFor="publisher"
-                  className="block font-medium text-gray-700"
-                >
-                  สำนักพิมพ์
-                </label>
-                <input
-                  type="text"
-                  id="publisher"
-                  name="publisher"
-                  value={book?.publisher}
-                  onChange={handleChange}
-                  className="mt-1 w-full rounded border border-gray-300 px-3 py-2"
-                  placeholder="สำนักพิมพ์"
-                />
-              </div>
-            </>
-          ) : (
-            <>
-              {/* Publisher */}
-              <div>
-                <label
-                  htmlFor="publisher"
-                  className="block font-medium text-gray-700"
-                >
-                  สำนักพิมพ์
-                </label>
-                <input
-                  type="text"
-                  id="publisher"
-                  name="publisher"
-                  value={book?.publisher}
-                  onChange={handleChange}
-                  className="mt-1 w-full rounded border border-gray-300 px-3 py-2"
-                  placeholder="สำนักพิมพ์"
-                />
-              </div>
-
-              {/* Page Count */}
-              <div>
-                <label
-                  htmlFor="pageCount"
-                  className="block font-medium text-gray-700"
-                >
-                  จำนวนหน้า
-                </label>
-                <input
-                  type="number"
-                  id="pageCount"
-                  name="pageCount"
-                  value={book?.pageCount}
-                  onChange={handleChange}
-                  className="mt-1 w-full rounded border border-gray-300 px-3 py-2"
-                  placeholder="จำนวนหน้า"
-                />
-              </div>
-
-              {/* Genre */}
-              <div>
-                <label htmlFor="genre" className="block font-medium text-gray-700">
-                  ประเภท
-                </label>
-                <input
-                  type="text"
-                  id="genre"
-                  name="genre"
-                  value={book?.genre}
-                  onChange={handleChange}
-                  className="mt-1 w-full rounded border border-gray-300 px-3 py-2"
-                  placeholder="ประเภทหนังสือ"
-                />
-              </div>
-            </>
-          )}
-
+          {/* Genre */}
+          <div>
+            <label htmlFor="genre" className="block font-medium text-gray-700">
+              ประเภท
+            </label>
+            <input
+              type="text"
+              id="genre"
+              name="genre"
+              value={book?.genre}
+              onChange={handleChange}
+              className="mt-1 w-full rounded border border-gray-300 px-3 py-2"
+              placeholder="ประเภทหนังสือ"
+            />
+          </div>
 
           {/* Language */}
           <div>
