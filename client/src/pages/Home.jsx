@@ -6,7 +6,7 @@ import BookCard from "../components/BookCard";
 import ComicCard from "../components/ComicCard";
 import JournalCard from "../components/JournalCard";
 import JournalsService from "../services/JournalsService";
-import { Link } from "react-router";
+
 
 const Books = () => {
   const [books, setBooks] = useState([]);
